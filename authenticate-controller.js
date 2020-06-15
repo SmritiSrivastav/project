@@ -7,42 +7,61 @@ module.exports.authenticate=function(req,res){
 	var choice=req.body.choice;
     var username=req.body.username;
     var password=req.body.password;
-	var sql='SELECT * FROM login WHERE '+ choice +' = "'+ username+'" and password = "'+password+'";';
-	console.log(sql);
+	var user_id;
+	var sql='SELECT user_id,username,user_type,phone,email FROM login WHERE '+ choice +' = "'+ username+'" and password = "'+password+'";';
     connection.query(sql,function (error, results, fields) {
       if (error) {
           res.json({
             status:false,
+			title: error,
             message:"There is something wrong with the query"
             })
       }else{
         if(results.length >0){
-			app.use(cookieParser());
-			app.use(session({results}));
-            if(password==results[0].password){
+			if(results[0].user_type==1){
+				connection.query('select doctor_id from doctor where user_id_ref=?',[results[0].user_id],function(errord,resultsd,fieldsd){
+					if(errord){
+					res.json({
+				status:false,
+				title: errord,
+				message:"There is something wrong with the query"
+            });	
+					}
+			else{
+				user_id=resultsd[0].doctor_id;
+			}
+				});
+				
+				
+			}
+			else{
+				user_id=results[0].user_id;
+			}
+			
+			req.session.user_id=user_id;
+			req.session.username=results[0].username;
+			//req.session.email=results[0].email;
+			//req.session.phone=results[0].phone;
 				
                 res.json({
                     status:true,
                     message:'User authenticated',
-					/*Object.keys(result).forEach(function(key) {
-      var row = result[key];
-      console.log(row.name)
-    }*/
-                })
-            }else{
+
+                });
+            /*}else{
                 res.json({
                   status:false,
                   message:"Username and password does not match"
                  });
-            }
+            }*/
          
         }
-        else{
+       /* else{
           res.json({
               status:false, 			  
             message:"username does not exits "
           });
-        }
+        }*/
       }
     });
 }
