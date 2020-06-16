@@ -12,7 +12,7 @@ var db = mysql.createConnection({
   host     : '35.200.193.123',
   user     : 'sakshi',
   password : 'summer2020',
-  database : 'test'
+  database : 'test_db'
 });
 db.connect(function(err){
   if(err){throw err;}
