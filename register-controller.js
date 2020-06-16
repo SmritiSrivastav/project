@@ -31,7 +31,7 @@ module.exports.register=function(req,res){
 			  //console.log(user_id);
 			  //console.log(type);
 			  if (type==1){
-				  connection.query('Insert into doctor (user_id_ref,doctor_name,speciality,qualification) values (?,?,NULL,NULL)',[user_id,username],function(errord,resultsd,fieldsd){if (error) {
+				  connection.query('Insert into doctor (user_id_ref,doctor_name,speciality,qualification,department_id) values (?,?,NULL,NULL)',[user_id,username,req.body.department_id],function(errord,resultsd,fieldsd){if (error) {
         res.json({
            status:false,
             message:errord
