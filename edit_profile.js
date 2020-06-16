@@ -27,7 +27,7 @@ function fetchData(response){
 		  });
 	  }
   // console.log(result);
-  response.write('<form method="post" action="profile.js">')
+  response.write('<form method="post" action="profile_save.js">')
    response.write('<table><tr>');
    
 	response.write('<tr><td><input type="text" id="username" value="' +result[0].username+ '"></td></tr>');
