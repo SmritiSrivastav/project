@@ -1,64 +1,14 @@
-var mysql = require('mysql');
-var express = require('express');
-var app = express();
+var connection = require('./../config');
+var express=require('express');
+var router=express.Router();
 
-app.get('/', function(request,response){
-  fetchData(response);
-console.log("Done displayed data!");
-
-});
-
-var db = mysql.createConnection({
-  host     : '35.200.193.123',
-  user     : 'sakshi',
-  password : 'summer2020',
-  database : 'test_db'
-});
-db.connect(function(err){
-  if(err){throw err;}
-  console.log("Connected to database")
-
-})
-
-function executeQuery(sql,cb){
-  db.query(sql, function(error,result,fields){
-    if(error){ throw error;}
-    cb(result);
-  })
+module.exports.view_doctor=function(req,res){
+	connection.query("select doctor_name,experience,specialization,department_name from doctor natural join department on department.department_id=doctor.department_id where department.department_id=?",[req.body.department_id],function(errormain,resultmain,fieldmain){
+		if(errormain){res.json({message:errormain});}
+		else{
+			res.json({
+			status:true,
+			message:resultmain});
+		}
+	});
 }
-function fetchData(response){
-  executeQuery("select username,specialization,experience from doctor natural join login on user_id=user_id_ref where department_id=? and user_type=1",[req.body.department_id],function(error,result){
-	  if (error){
-		  res.json({
-			  status:false,
-			  message:error
-		  });
-	  }
-   //console.log(result);
-   response.write('<table><tr>');
-   for(var column in result[0]){
-     response.write('<td><label>'+ column + '</td></label>');
-     response.write('</tr>');
-     
-   }
-  for(var row in result){
-    response.write('<tr>');
-    for (var column in result[row]){
-      response.write('<td><label>' +result[row][column]+ '</td></label>');
-
-    }
-    response.write('</tr>');
-
-  }
-  response.end('</table>');
-  
-  
-
-});
-
-}
-app.listen(8080,function(){
-  //console.log("listening");
-})
-
-
