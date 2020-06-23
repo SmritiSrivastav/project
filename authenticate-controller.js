@@ -37,31 +37,17 @@ module.exports.authenticate=function(req,res){
 			else{
 				user_id=results[0].user_id;
 			}
-			
+			//Creation of sessions using cookie-parser
 			req.session.user_id=user_id;
 			req.session.username=results[0].username;
-			//req.session.email=results[0].email;
-			//req.session.phone=results[0].phone;
 				
                 res.json({
                     status:true,
                     message:'User authenticated',
 
                 });
-            /*}else{
-                res.json({
-                  status:false,
-                  message:"Username and password does not match"
-                 });
-            }*/
          
         }
-       /* else{
-          res.json({
-              status:false, 			  
-            message:"username does not exits "
-          });
-        }*/
       }
     });
 }
