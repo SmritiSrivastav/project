@@ -9,10 +9,15 @@ Setup your own config.js file like :
 # config.js
 
 var mysql      = require('mysql');
+
 var connection = mysql.createConnection({
+
   host     : 'IP address here',
+  
   user     : 'user details of database here',
+  
   password : 'password for user',
+  
   database : 'database name'
 });
 connection.connect(function(err){
