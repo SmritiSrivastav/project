@@ -4,7 +4,9 @@ The API is designed using Node js-Express and also includes the work of sessions
 I created it for my project and am sharing it to help the ones who are thinking of similiar work pieces.
 
 The database structure is also there in the pdf file.
-Setup your own connfig.js file like : 
+Setup your own config.js file like : 
+
+# config.js
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
