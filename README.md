@@ -19,18 +19,29 @@ var connection = mysql.createConnection({
   password : 'password for user',
   
   database : 'database name'
+  
 });
+
 connection.connect(function(err){
+
 if(!err) {
+
     console.log("Database is connected");
+    
 } else {
+
     console.log("Error while connecting with database");
+    
 }
+
 });
+
 module.exports = connection;
 
 
-The node modules installe for the same are there in the file named node_modules.zip
-
+# File details
+The node modules installed for the same are there in the file named node_modules.zip
 
 The entire code is also available in with_session.zip file.
+
+The database structure is in the pdf file.
