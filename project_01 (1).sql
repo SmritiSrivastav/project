@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2020 at 04:15 PM
+-- Generation Time: Jul 24, 2020 at 09:16 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -19,238 +19,109 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `project_01`
+-- Database: `infy_test`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `appointments`
+-- Table structure for table `company`
 --
 
-CREATE TABLE `appointments` (
-  `doctor_id` int(11) NOT NULL,
-  `patient_id` int(11) NOT NULL,
-  `appointment_no` int(11) NOT NULL,
-  `slot_booked_for` datetime NOT NULL
+CREATE TABLE `company` (
+  `company_name` varchar(20) DEFAULT NULL,
+  `city` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`company_name`, `city`) VALUES
+('satyam', 'mum'),
+('satyam', 'del'),
+('aol', 'cal'),
+('vsnl', 'del');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `department`
+-- Table structure for table `employee`
 --
 
-CREATE TABLE `department` (
-  `department_id` int(11) NOT NULL,
-  `department_name` int(11) NOT NULL,
-  `description` int(11) NOT NULL
+CREATE TABLE `employee` (
+  `employee_name` varchar(20) DEFAULT NULL,
+  `street` varchar(6) DEFAULT NULL,
+  `city` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`employee_name`, `street`, `city`) VALUES
+('ashoke', 'vip', 'cal'),
+('sanjay', 'gt', 'mum'),
+('rakesh', 'bt', 'cal'),
+('dilip', 'vip', 'cal'),
+('manoj', 'gt', 'del'),
+('pranab', 'vip', 'cal'),
+('salim', 'vip', 'del'),
+('karim', 'bt', 'mum'),
+('sayan', 'gt', 'cal'),
+('rajib', 'vip', 'mum');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `doctor`
+-- Table structure for table `manages`
 --
 
-CREATE TABLE `doctor` (
-  `doctor_id` int(11) NOT NULL,
-  `user_id_ref` int(11) NOT NULL,
-  `specialization` varchar(255) NOT NULL,
-  `qualification` varchar(255) NOT NULL,
-  `experience` int(11) NOT NULL DEFAULT 0,
-  `department_id` int(11) NOT NULL
+CREATE TABLE `manages` (
+  `employee_name` varchar(20) DEFAULT NULL,
+  `manager_name` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `manages`
+--
+
+INSERT INTO `manages` (`employee_name`, `manager_name`) VALUES
+('ashoke', 'dilip'),
+('sanjay', 'dilip'),
+('rakesh', 'karim'),
+('manoj', 'pranab'),
+('salim', 'karim'),
+('sayan', 'pranab'),
+('rajib', 'pranab');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `facilities`
+-- Table structure for table `works`
 --
 
-CREATE TABLE `facilities` (
-  `facility_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `description_available` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `login`
---
-
-CREATE TABLE `login` (
-  `user_id` int(11) NOT NULL,
-  `email` varchar(120) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `password` varchar(120) NOT NULL,
-  `user_type` tinyint(1) NOT NULL DEFAULT 0,
-  `age` int(11) NOT NULL,
-  `gender` varchar(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `medical_records`
---
-
-CREATE TABLE `medical_records` (
-  `medical_record_id` int(11) NOT NULL,
-  `patient_id` int(11) NOT NULL,
-  `symptoms` varchar(255) NOT NULL,
-  `medication_prescribed` varchar(255) NOT NULL,
-  `doctor` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `unavailable`
---
-
-CREATE TABLE `unavailable` (
-  `id` int(11) NOT NULL,
-  `doctor_id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `details` int(11) NOT NULL
+CREATE TABLE `works` (
+  `employee_name` varchar(20) DEFAULT NULL,
+  `company_name` varchar(20) DEFAULT NULL,
+  `salary` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- Dumping data for table `works`
 --
 
---
--- Indexes for table `appointments`
---
-ALTER TABLE `appointments`
-  ADD PRIMARY KEY (`appointment_no`),
-  ADD KEY `doctor_id` (`doctor_id`),
-  ADD KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `department`
---
-ALTER TABLE `department`
-  ADD PRIMARY KEY (`department_id`);
-
---
--- Indexes for table `doctor`
---
-ALTER TABLE `doctor`
-  ADD PRIMARY KEY (`doctor_id`),
-  ADD KEY `department_id` (`department_id`),
-  ADD KEY `user_id_ref` (`user_id_ref`);
-
---
--- Indexes for table `facilities`
---
-ALTER TABLE `facilities`
-  ADD PRIMARY KEY (`facility_id`),
-  ADD KEY `department_id` (`department_id`);
-
---
--- Indexes for table `login`
---
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- Indexes for table `medical_records`
---
-ALTER TABLE `medical_records`
-  ADD PRIMARY KEY (`medical_record_id`),
-  ADD KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `unavailable`
---
-ALTER TABLE `unavailable`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `doctor_id` (`doctor_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `appointments`
---
-ALTER TABLE `appointments`
-  MODIFY `appointment_no` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `department`
---
-ALTER TABLE `department`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `doctor`
---
-ALTER TABLE `doctor`
-  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `facilities`
---
-ALTER TABLE `facilities`
-  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `login`
---
-ALTER TABLE `login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `medical_records`
---
-ALTER TABLE `medical_records`
-  MODIFY `medical_record_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `unavailable`
---
-ALTER TABLE `unavailable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `appointments`
---
-ALTER TABLE `appointments`
-  ADD CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`),
-  ADD CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `login` (`user_id`);
-
---
--- Constraints for table `doctor`
---
-ALTER TABLE `doctor`
-  ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`),
-  ADD CONSTRAINT `doctor_ibfk_2` FOREIGN KEY (`user_id_ref`) REFERENCES `login` (`user_id`);
-
---
--- Constraints for table `facilities`
---
-ALTER TABLE `facilities`
-  ADD CONSTRAINT `facilities_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`);
-
---
--- Constraints for table `medical_records`
---
-ALTER TABLE `medical_records`
-  ADD CONSTRAINT `medical_records_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `login` (`user_id`);
-
---
--- Constraints for table `unavailable`
---
-ALTER TABLE `unavailable`
-  ADD CONSTRAINT `unavailable_ibfk_1` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`);
+INSERT INTO `works` (`employee_name`, `company_name`, `salary`) VALUES
+('rakesh', 'satyam', 8000),
+('rajib', 'aol', 15000),
+('manoj', 'aol', 10000),
+('pranab', 'aol', 50000),
+('karim', 'satyam', 35000),
+('salim', 'satyam', 6000),
+('sayan', 'aol', 20000),
+('dilip', 'vsnl', 35000),
+('ashoke', 'vsnl', 13000),
+('sanjay', 'vsnl', 30000);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
